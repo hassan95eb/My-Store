@@ -1,6 +1,15 @@
+import Header from "./pages/Header";
+import Footer from "./pages/Footer";
+import RoutesSite from "./constants/RoutesSite";
+
 const App = () => {
-  return <div className="text-3xl font-bold underline text-red-500">Hello World</div>;
+  return (
+    <div>
+      <Header />
+      <RoutesSite />
+      <Footer />
+    </div>
+  );
 };
 
 export default App;
-
