@@ -1,6 +1,4 @@
-import { Content, Footer, Header } from "antd/es/layout/layout";
 import RoutesSite from "./constants/RoutesSite";
-import { Layout } from "antd";
 import Navbar from "./pages/Navbar";
 import FooterSite from "./pages/FooterSite";
 import { BrowserRouter } from "react-router-dom";
@@ -8,17 +6,17 @@ import { BrowserRouter } from "react-router-dom";
 const App = () => {
   return (
     <BrowserRouter>
-      <Layout>
-        <Header className="flex items-center justify-between">
+      <div className="min-h-screen flex flex-col">
+        <header className="bg-purple-800 text-white">
           <Navbar />
-        </Header>
-        <Content style={{ padding: "0 48px" }}>
+        </header>
+        <main className="flex-grow px-12">
           <RoutesSite />
-        </Content>
-        <Footer>
+        </main>
+        <footer>
           <FooterSite />
-        </Footer>
-      </Layout>
+        </footer>
+      </div>
     </BrowserRouter>
   );
 };

@@ -1,46 +1,37 @@
-import { Menu, Button, Drawer } from "antd";
 import Logo from "../Components/Logo/Logo";
-import {
-  ContactsOutlined,
-  HomeOutlined,
-  InfoOutlined,
-  ReadOutlined,
-  ShoppingOutlined,
-  MenuOutlined,
-} from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { useState, useEffect, useMemo } from "react";
 
 const Navbar = () => {
-  const [visible, setVisible] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   const menuItems = useMemo(
     () => [
       {
         key: "/",
-        label: <Link to="/">Home</Link>,
-        icon: <HomeOutlined />,
+        label: "Home",
+        path: "/",
       },
       {
         key: "/store",
-        label: <Link to="/store">Store</Link>,
-        icon: <ShoppingOutlined />,
+        label: "Store",
+        path: "/store",
       },
       {
         key: "/blog",
-        label: <Link to="/blog">Blog</Link>,
-        icon: <ReadOutlined />,
+        label: "Blog",
+        path: "/blog",
       },
       {
         key: "/about-us",
-        label: <Link to="/about-us">About Us</Link>,
-        icon: <InfoOutlined />,
+        label: "About Us",
+        path: "/about-us",
       },
       {
         key: "/contact-us",
-        label: <Link to="/contact-us">Contact Us</Link>,
-        icon: <ContactsOutlined />,
+        label: "Contact Us",
+        path: "/contact-us",
       },
     ],
     []
@@ -52,54 +43,82 @@ const Navbar = () => {
     };
 
     window.addEventListener("resize", handleResize);
-
-    // Cleanup function to remove event listener
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const showDrawer = () => {
-    setVisible(true);
-  };
-
-  const onClose = () => {
-    setVisible(false);
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
   };
 
   return (
-    <div className="navbar-container w-screen" style={{ padding: "10px" }}>
+    <nav className="navbar-container max-width p-4">
       <div className="flex justify-between items-center">
+        <Logo />
+        
         {isMobile ? (
           <>
-            <Button type="primary" onClick={showDrawer}>
-              <MenuOutlined />
-            </Button>
-            <Drawer
-              title="Menu"
-              placement="right"
-              onClose={onClose}
-              open={visible}
+            <button
+              onClick={toggleMenu}
+              className="p-2 text-white hover:bg-gray-700 rounded"
             >
-              <Menu
-                theme="light"
-                mode="vertical"
-                items={menuItems}
-                onClick={onClose}
-              />
-            </Drawer>
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </button>
+
+            {isMenuOpen && (
+              <div className="fixed right-0 top-0 h-full w-64 shadow-lg z-50 bg-purple-800">
+                <div className="p-4 ">
+                  <button
+                    onClick={toggleMenu}
+                    className="float-right p-2 hover:bg-rose-500 rounded"
+                  >
+                    ✕
+                  </button>
+                </div>
+                <ul className="p-4">
+                  {menuItems.map((item) => (
+                    <li key={item.key} className="mb-4">
+                      <Link
+                        to={item.path}
+                        className="block p-2 hover:bg-gray-100 rounded"
+                        onClick={toggleMenu}
+                      >
+                        {item.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </>
         ) : (
-          <Menu
-            theme="dark"
-            className="w-1/2"
-            mode="horizontal"
-            items={menuItems}
-          />
+          <ul className="flex space-x-6">
+            {menuItems.map((item) => (
+              <li key={item.key}>
+                <Link
+                  to={item.path}
+                  className="text-white hover:text-gray-300 transition-colors"
+                >
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
         )}
-        <Logo />
+        
       </div>
-    </div>
+    </nav>
   );
 };
 
