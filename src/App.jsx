@@ -7,7 +7,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <div className="min-h-screen flex flex-col">
-        <header className="bg-purple-800 text-white">
+        <header className="bg-slate-900 text-white">
           <Navbar />
         </header>
         <main className="flex-grow px-12">
