@@ -51,9 +51,9 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="navbar-container max-width p-4">
+    <nav className="navbar-container max-width p-4 px-10">
       <div className="flex justify-between items-center">
-        <Logo />
+        
         
         {isMobile ? (
           <>
@@ -116,7 +116,7 @@ const Navbar = () => {
             ))}
           </ul>
         )}
-        
+        <Logo />
       </div>
     </nav>
   );
